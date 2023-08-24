@@ -15,7 +15,7 @@ try {
     
     const isMatch = await bcrypt.compare(password,user.password);
     
-    if(!isMatch) return next(new ErrorHandler("password match nahi hora tera sahi wala password dal",400))
+    if(!isMatch) return next(new ErrorHandler("Wrong Password",400))
    
    sendCookie(user, res, `Welcome back, ${user.name}`, 200);
 } catch (error) {
@@ -29,7 +29,7 @@ export const register =  async(req,res,next)=>{
       
           let user = await User.findOne({ email });
       
-          if (user) return next(new ErrorHandler("are bhai iski to pahle se hi id bani hui hai", 400));
+          if (user) return next(new ErrorHandler("Account Already exist", 400));
       
           const hashedPassword = await bcrypt.hash(password, 10);
       
